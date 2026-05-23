@@ -118,7 +118,7 @@ function App() {
     setStage('welcome');
 
     try {
-      const response = await axios.post('http://127.0.0.1:8000/chat', { 
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/chat`, { 
         message: input 
       });
       
@@ -151,7 +151,7 @@ function App() {
 
     if (isAdminRegister) {
       try {
-        const res = await axios.post('http://127.0.0.1:8000/admin/register', {
+        const res = await axios.post(`${import.meta.env.VITE_API_URL}/admin/register`, {
           email: adminEmail,
           password: adminPassword,
           invitation_code: adminInviteCode
@@ -166,7 +166,7 @@ function App() {
       }
     } else {
       try {
-        const res = await axios.post('http://127.0.0.1:8000/admin/login', {
+        const res = await axios.post(`${import.meta.env.VITE_API_URL}/admin/login`, {
           email: adminEmail,
           password: adminPassword
         });
@@ -192,7 +192,7 @@ function App() {
 
   const fetchDataset = async () => {
     try {
-      const res = await axios.get('http://127.0.0.1:8000/admin/dataset');
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/admin/dataset`);
       setDataset(res.data);
     } catch (err) {
       console.error("Gagal mengambil dataset:", err);
@@ -218,7 +218,7 @@ function App() {
   const handleAddWord = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://127.0.0.1:8000/admin/dataset', {
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/admin/dataset`, {
         word: newWord,
         category: newCategory
       });
@@ -237,7 +237,7 @@ function App() {
   const handleDeleteWord = async (word, category) => {
     if (window.confirm(`Apakah Anda yakin ingin menghapus kata '${word}' dari ${category}?`)) {
       try {
-        const res = await axios.delete(`http://127.0.0.1:8000/admin/dataset/${word}/${category}`);
+        const res = await axios.delete(`${import.meta.env.VITE_API_URL}/admin/dataset/${word}/${category}`);
         if (res.data.status === 'success') {
           fetchDataset(); 
 
