@@ -5,7 +5,7 @@ const Header = ({ onAdminClick, isAdminLoggedIn, onLogout }) => (
   <header className="bg-[#109060] text-white px-6 py-4 flex justify-between items-center shadow-md fixed top-0 left-0 w-full h-20 z-50">
     <div className="flex items-center gap-4">
       <img 
-        src="src/assets/Logo.png" 
+        src="/Logo.png" 
         alt="Logo DLSM" 
         className="w-12 h-12 object-contain bg-[#109060]" 
       />
