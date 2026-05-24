@@ -48,7 +48,7 @@ const InputArea = ({ input, setInput, sendMessage, isLoading }) => (
         }}
         placeholder="Ceritakan minat, bakat, atau bidang yang kamu sukai..."
         rows={1}
-        className="flex-1 bg-transparent px-4 py-2 text-gray-700 focus:outline-none placeholder:text-gray-400 resize-none overflow-y-auto max-h-32 min-h-10"
+        className="flex-1 bg-transparent px-4 py-2 text-gray-700 focus:outline-none placeholder:text-gray-400 resize-none overflow-y-auto max-h-32 min-h-10 wrap-break-words whitespace-pre-wrap"
         disabled={isLoading}
       />
       <button 
