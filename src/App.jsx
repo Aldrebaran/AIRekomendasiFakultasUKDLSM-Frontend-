@@ -271,7 +271,47 @@ function App() {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   
-  const currentDataset = filteredDataset.slice(indexOfFirstItem, indexOfLastItem);
+  const currentDataset = filteredDataset.slice(indexOfFirstItem, indexOfLastItem); 
+
+  const getDescription = (facultyName, score, index) => {
+  const templates = {
+    ranking1High: [
+      `Berdasarkan analisis minat, Anda memiliki kecocokan yang sangat kuat di ${facultyName}. Kurikulum dan fokus pembelajaran di bidang ini dirancang khusus untuk mengasah potensi terbaik Anda secara maksimal.`,
+      `Hasil evaluasi menunjukkan bahwa ${facultyName} adalah wadah paling ideal untuk bakat Anda. Memilih rumpun ini akan mempercepat akselerasi keahlian strategis yang sudah Anda miliki.`,
+      `Cerita minat Anda selaras sempurna dengan kompetensi utama di ${facultyName}. Industri ini membutuhkan profil pemikir kritis dan dinamis seperti Anda untuk berkembang.`
+    ],
+    ranking1Low: [
+      `Berdasarkan cerita Anda, ${facultyName} menjadi rekomendasi teratas yang paling mendekati preferensi Anda saat ini. Mengeksplorasi bidang ini akan membantu mengasah potensi tersembunyi yang Anda miliki.`,
+      `Meskipun narasi minat Anda masih bersifat umum, karakteristik Anda paling condong mengarah ke ${facultyName}. Ini adalah titik awal yang baik untuk mulai memfokuskan karir akademik Anda.`,
+      `AI mendeteksi fondasi ketertarikan Anda paling dominan berada di ruang lingkup ${facultyName}. Bidang ini menawarkan peta jalan studi yang adaptif untuk menjajaki minat baru Anda.`
+    ],
+    mediumScore: [
+      `Pilihan di ${facultyName} juga menunjukkan keselarasan yang cukup baik dengan beberapa poin cerita Anda. Bidang ini bisa menjadi alternatif karir yang solid untuk memperluas cakrawala keahlian Anda.`,
+      `Disiplin ilmu di ${facultyName} memiliki irisan menarik dengan minat yang Anda sebutkan. Mengombinasikan aspek ini akan membuat profil keahlian Anda menjadi lebih unik di dunia kerja.`
+    ],
+    lowScore: [
+      `Aspek di ${facultyName} memiliki keterkaitan minor dengan cerita Anda. Bidang ini bisa menjadi wawasan pelengkap yang berguna untuk mendukung kompetensi utama Anda di masa depan.`,
+      `Rumpun ilmu di ${facultyName} berada pada klaster pendukung. Meskipun bukan prioritas utama, fondasi dasar dari bidang ini tetap bernilai tinggi untuk memperkaya perspektif global Anda.`
+    ],
+    bottomScore: [
+      `Minat yang Anda ceritakan cenderung mengarah ke sektor lain, sehingga ${facultyName} berada di posisi alternatif terbawah untuk eksplorasi studi Anda saat ini.`,
+      `Analisis AI menunjukkan kecenderungan yang sangat minim ke arah ${facultyName}. Fokus energi Anda saat ini sebaiknya dialokasikan pada opsi peringkat di atasnya.`
+    ]
+  };
+
+  const pickRandom = (array) => {
+    const stringHash = facultyName.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    const randomIndex = (stringHash + score) % array.length;
+    return array[randomIndex];
+  };
+  if (index === 0) {
+    return score >= 60 ? pickRandom(templates.ranking1High) : pickRandom(templates.ranking1Low);
+  }
+
+  if (score >= 40) return pickRandom(templates.mediumScore);
+  if (score >= 10) return pickRandom(templates.lowScore);
+  return pickRandom(templates.bottomScore);
+};
 
  return (
     <div className="min-h-screen bg-gray-50 text-gray-900 font-sans pt-24 pb-32">
@@ -481,7 +521,7 @@ function App() {
                       number={rec.number}
                       title={rec.title}
                       percentage={rec.percentage} 
-                      description={rec.description}
+                      description={getDescription(rec.title, rec.percentage, index)}
                       color={rec.color}
                     />
                   ))}
